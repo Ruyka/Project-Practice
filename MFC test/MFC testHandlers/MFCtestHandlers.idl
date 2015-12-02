@@ -1,0 +1,69 @@
+// MFCtestHandlers.idl : IDL source for MFC testHandlers
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (MFCtestHandlers.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(04ABAE64-2E86-47A2-B8E3-C77A9249EED4),
+	pointer_default(unique)
+]
+interface IPreview : IUnknown
+{
+};
+
+[
+	object,
+	uuid(D78BB7DA-661A-438D-B8D3-82DF7363838E),
+	pointer_default(unique)
+]
+interface IThumbnail : IUnknown
+{
+};
+
+[
+	object,
+	uuid(6CD784AD-4D70-4DF2-9006-9628185E78B4),
+	pointer_default(unique)
+]
+interface ISearch : IUnknown
+{
+};
+
+[
+	uuid(05A5527A-6060-4039-AB42-6195D427D04E),
+	version(1.0),
+]
+library MFC testHandlersLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(E830D2D7-46C5-472F-93DB-FF3E78B96F4B)
+	]
+	coclass Preview
+	{
+		[default] interface IPreviewHandler;
+	};
+	[
+		uuid(25192939-4D49-42AA-9D03-85F90305FD8F)
+	]
+	coclass Thumbnail
+	{
+		[default] interface IThumbnailProvider;
+	};
+	[
+		uuid(9BC0598E-2E7B-4624-853F-A0B50AD14FCE)
+	]
+	coclass Search
+	{
+		[default] interface IFilter;
+	};
+};
+
+import "shobjidl.idl";
+import "thumbcache.idl";
+import "filter.idl";

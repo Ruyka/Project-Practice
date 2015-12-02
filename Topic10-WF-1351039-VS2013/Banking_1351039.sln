@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking_1351039", "Banking_1351039\Banking_1351039.csproj", "{E995118E-3E49-4163-9C14-06E9568A631C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E995118E-3E49-4163-9C14-06E9568A631C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E995118E-3E49-4163-9C14-06E9568A631C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E995118E-3E49-4163-9C14-06E9568A631C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E995118E-3E49-4163-9C14-06E9568A631C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

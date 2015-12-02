@@ -1,0 +1,211 @@
+//Enemy
+local enemyCounter 
+local enemyCap
+local enemySp
+//Bullet
+local bulletCounter 
+local eBulletCap
+local sBulletCap
+local bulletSp
+//Space ship
+local spaceShip
+local spaceShipSp
+local enemyKilled
+local bulletShooted
+//Universal 
+local temp
+local temp1
+local temp2
+//Game
+local frame
+local isEnd
+
+on startGame
+   init
+   inGame
+end startGame
+
+on inGame
+   repeat until isEnd is true
+      updateState
+      if frame mod 30 = 0 then
+         generateEnemy(5)
+      end if
+      wait for 200 
+   end repeat
+   
+   if isEnd is true then
+      endGame
+   end if
+end inGame
+
+on init
+   put false into isEnd
+   put 0 into frame
+   put 0 into enemyCounter
+   put 40 into enemyCap
+   put 0 into enemyKilled
+   put 0 into bulletCounter
+   put 30 into eBulletCap
+   put 30 into sBulletCap
+   put 0 into bulletShooted
+   put 20 into spaceShipSp
+   put 10 into enemySp
+   put 40 into bulletSp
+   put "spaceShip" into spaceShip
+   
+   set the bottom of button "spaceShip" to 575
+   set the left of button "spaceShip" to 381
+   
+   repeat with i = 0 to enemyCap      
+      put "enemy_"& i &"_obj" into temp
+      set the bottom of button temp to 0
+      set the left of button temp to 400
+   end repeat
+   
+   repeat with i = 0 to eBulletCap      
+      put "eBullet_"& i &"_obj" into temp
+      set the bottom of button temp to 0
+      set the left of button temp to 400    
+   end repeat
+   
+   repeat with i = 0 to sBulletCap
+      put "sBullet_"& i &"_obj" into temp
+      set the bottom of button temp to 0
+      set the left of button temp to 400 
+   end repeat
+end init
+
+on updateState
+   repeat with i = 0 to eBulletCap
+      put "eBullet_"& i &"_obj" into temp
+      put the left of temp - the left of spaceShip into tLeft
+      put the bottom of temp - the top of spaceShip into tGap
+      if  tLeft > -17 and tLeft < 54 and tGap >= 0 and tGap <= 20 then
+         put true into isEnd
+         exit updateState
+      end if
+   end repeat
+   
+   repeat with i = 0 to enemyCap
+      put "enemy_"& i &"_obj" into temp
+      put the left of temp - the left of spaceShip into tLeft
+      put the bottom of temp - the top of spaceShip into tGap
+      if  tLeft > -49 and tLeft < 54 and tGap >= 0 and tGap <= 10 then
+         put true into isEnd
+         exit updateState
+      end if
+   end repeat
+   
+   repeat with i = 0 to sBulletCap
+      put false into temp
+      put "sBullet_"& i &"_obj" into temp1
+      repeat with j = 0 to eBulletCap
+         put "eBullet_"& j &"_obj" into temp2
+         put the left of temp2 - the left of temp1 into tLeft
+         put the bottom of temp2- the top of temp1 into tGap
+         if  tLeft > -17 and tLeft < 17 and tGap >= 0 and tGap <= 40 then
+            set the bottom of temp1 to 0
+            set the bottom of temp2 to 0
+            put true into temp
+            exit repeat
+         end if
+      end repeat
+      
+      if temp is false then
+         repeat with j = 0 to enemyCap
+            put "enemy_"& j &"_obj" into temp2
+            put "eBullet_"& j &"_obj" into temp2
+            put the left of temp2 - the left of temp1 into tLeft
+            put the bottom of temp2- the top of temp1 into tGap
+            if  tLeft > -17 and tLeft < 49 and tGap >= 0 and tGap <= 30 then
+               set the bottom of temp1 to 0
+               set the bottom of temp2 to 0
+               put true into temp
+               add 1 to enemyKilled
+               exit repeat
+            end if
+         end repeat
+      end if
+      
+      if temp is false and the bottom of temp1 > 0 then
+         set the bottom of temp1 to the bottom of temp1 - bulletSp
+      end if
+   end repeat
+   
+   repeat with i = 0 to eBulletCap
+      put "eBullet_"& i &"_obj" into temp
+      if the top of temp < 600 then
+         set the bottom of teBullet  to the bottom of teBullet + bulletSp
+      end if      
+   end repeat
+   
+   repeat with i = 0 to enemyCap
+      put "enemy_"& i &"_obj" into temp
+      if the top of temp < 600 then
+         set the bottom of temp to the bottom of temp + enemySp
+      end if      
+      if random(1000) mod 3 = 0 then
+         createBullet(temp)
+      end if
+   end repeat
+   
+   add 1 to frame
+end updateState
+
+on generateEnemy
+   put random(16) into temp
+   repeat temp
+      repeat with i = 0 to enemyCap
+         put "enemy_"& i &"_obj" into temp1
+         if the top of temp1 > 600 or the bottom of temp1 < 0 then
+            set the top of temp1 to 0
+            set the left of temp1 to random(751)
+            exit repeat
+         end if
+      end repeat
+   end repeat
+end generateEnemy
+
+on createBullet obj
+   if obj = spaceShip then
+      repeat with i = 0 to sBulletCap
+         put "sBullet_"& i &"_obj" into temp
+         if the bottom of temp < 0 then
+            set the bottom of temp to the top of obj
+            set the left of temp to the left of obj + 37
+            exit repeat
+         end if
+      end repeat
+   else
+      repeat with i = 0 to eBulletCap
+         put "eBullet_"& i &"_obj" into temp
+         if the bottom of temp < 0 or the top of temp > 600 then
+            set the top of temp to the bottom of obj
+            set the left of temp to the left of obj + 32
+            exit repeat
+         end if
+      end repeat         
+   end if
+end createBullet
+
+on arrowKey theKey
+   put the left of spaceShip to temp
+   if theKey is "left" then
+      set the left of spaceShip to temp - spaceShipSp
+   else if theKey is "right" then
+      set the left of spaceShip to temp + spaceShipSp
+   else if theKey is "up" then
+      createBullet(spaceShip)
+   end if
+   inGame
+end arrowKey
+
+on endGame/*
+   delete enemyCon
+   delete sBulletCon
+   delete eBulletCon
+   delete spaceShip
+   put "The end!!!!" & return & "Kill : " & enemyKilled & return & "Shoot : " & bulletShooted & return & "Total enemy : " & enemyCounter & return & "Total bullet shooted : " & bulletCounter & return into field "Info"
+   set the visible of field "Info" to true*/
+end endGame

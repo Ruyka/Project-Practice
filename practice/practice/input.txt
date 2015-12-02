@@ -1,0 +1,8 @@
+6 4
+engine
+brakes
+tires
+ashtray
+vinyl roof
+trip computer
+0 0

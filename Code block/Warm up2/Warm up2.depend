@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1443060809 source:s:\my project\code block\warm up2\main.cpp
+	<algorithm>
+	<iostream>
+	<iomanip>
+	<sstream>
+	<string>
+	<list>
+	<bitset>
+	<vector>
+	<stack>
+	<queue>
+	<deque>
+	<set>
+	<map>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<cctype>
+	<cmath>
+	<cassert>
+	<ctime>
+	<numeric>
+	<functional>
+	<valarray>
+	<complex>
+	<utility>
+
