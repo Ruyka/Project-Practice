@@ -1,0 +1,2 @@
+%Productbrand% %Productname% %ProductPrice% %Productdescription% %Picturename%
+
